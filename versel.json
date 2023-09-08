@@ -1,0 +1,15 @@
+{
+    "version":2,
+    "build":[
+        {
+            "src":"/app/api.py",
+            "use":"@versel/python"
+        }
+    ],
+    "routes":[
+        {
+            "src":"/(.*)",
+            "dest":"app/api.py"
+        }
+    ]
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            padding: 10px 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Add this CSS rule to move the Logout button to the right */
+        nav ul li#logoutLi {
+            margin-left: auto;
+        }
+
+        .content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#" id="homeBtn"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#" id="dashboardBtn"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+            <li><a href="#" id="profileBtn"><i class="fas fa-user"></i> Profile</a></li>
+            <li id="logoutLi"><button id="logoutBtn"><i class="fas fa-sign-out-alt"></i>LogOut</button></li> <!-- Moved Logout button to the right -->
+        </ul>
+    </nav>
+    <div class="content">
+        <!-- Content of each page will be loaded here -->
+        <div id="pageContent"></div>
+    </div>
+    
+    <script>
+        const pageContent = document.getElementById("pageContent");
+        const homeBtn = document.getElementById("homeBtn");
+        const dashboardBtn = document.getElementById("dashboardBtn");
+        const profileBtn = document.getElementById("profileBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        
+        // Function to load content into the pageContent div
+        function loadContent(content) {
+            pageContent.innerHTML = content;
+        }
+        
+        // Load default content initially
+        loadContent("<h2>Welcome!</h2><p>This is the default content that appears when no buttons are clicked.</p>");
+
+        // Function to fetch and load content from backend
+        async function loadBackendContent(endpoint) {
+            if (endpoint === "/logout") {
+                // Handle logout directly by redirecting to the logout URL
+                window.location.href = endpoint;
+                return;
+            }
+            try {
+                const response = await fetch(endpoint);
+                const content = await response.text();
+                loadContent(content);
+            } catch (error) {
+                console.error("Error fetching content:", error);
+            }
+        }
+        
+        // Add event listeners to buttons
+        homeBtn.addEventListener("click", function() {
+            loadBackendContent("/home");
+        });
+        
+        dashboardBtn.addEventListener("click", function() {
+            loadBackendContent("/dashboard");
+        });
+        
+        profileBtn.addEventListener("click", function() {
+            loadBackendContent("/profile");
+        });
+
+        logoutBtn.addEventListener("click", function() {
+            loadBackendContent("/logout");
+        });
+    </script>
+</body>
+</html>

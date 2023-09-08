@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Additional custom styling */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial,Helvetica,sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            position: relative; /* Set container to relative positioning */
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0; /* Remove padding */
+            background-color: transparent; /* Set background color to transparent */
+            border: none; /* Remove border */
+            box-shadow: none; /* Remove box shadow */
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://source.unsplash.com/1270x300/?fitness,cricketer,gym,sport,movie,nature,laptop,professional');
+            background-size: cover;
+            background-position: center;
+            z-index: -1; /* Place the background below the content */
+            opacity: 0.5; /* Adjust the background opacity as needed */
+        }
+        .content-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Set a semi-transparent background for content */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        h2{
+            color:black;
+        }
+        p{
+            color:white;
+        }
+        .logout-button {
+            margin-top: 15px;
+        }
+        .parallax-container {
+            background-image: url('https://source.unsplash.com/1270x300/?fitness,cricketer,gym,sport,movie,nature,professional');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            height: 600px; /* Adjust the height as needed */
+        }
+        .image-container {
+            background-image: url("https://source.unsplash.com/1310x400/?fitness,cricketer,gym,nature");
+            background-size: cover;
+            position: relative;
+            height: 140px;
+        }
+          
+        .text {
+            background-color: black;
+            color: white;
+            font-size: 4.5vw; 
+            font-weight: bold;
+            margin: 0 auto;
+            padding: 10px;
+            width: 30%;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: multiply;
+        }
+
+        /* Parallax effect styles */
+        .bgimg-1 {
+            position: relative;
+            opacity: 0.65;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url("https://source.unsplash.com/1310x400/?fitness,cricketer,gym,nature,water");
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="bgimg-1">
+        <div class="image-container">
+            <div class="text">HOME</div>
+        </div>
+    </div>
+
+    <!-- Your home page content using Bootstrap classes -->
+    <!-- Parallax container -->
+    <div class="parallax-container">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Welcome, {{username}}!</h2>
+                    <p>You have successfully logged in.</p>
+                    <p>Here is your personalized content.</p>
+                    <section>
+                        <h2 class="text-right" style="position: absolute; top: 60%; left: 70%; transform: translate(-50%, -50%); color: white; z-index: 1;">Welcome, {{username}}!</h2>
+                        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+                            <img class="home-image object-cover object-center rounded" alt="hero" src="https://source.unsplash.com/1310x400/?fitness,cricketer,gym,sport,movie,nature,laptop,professional" style="margin: 0 auto;">
+                        </div>
+                    </section>
+                </div>
+                <br>
+                <div class="col-md-4 mt-md-4 mt-2 text-md-right">
+                    <a href="/logout" class="btn btn-success logout-button" style="margin-right: 30px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

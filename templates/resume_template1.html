@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Resume</title>
+    <style>
+        .duration {
+            float: right;
+            margin-right: 80px; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Display the company logo -->
+    <div id="header_section" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1;margin-left: 50px;">
+            <img src="data:image/png;base64,{{ context.company_logo_base64 }}" alt="Company Logo" height="100">
+        </div>
+        <div style="text-align: right; flex: 1; margin-right: 50px;">
+            <h2 style="font-size: 25px;">{{ context.full_name }}</h2>
+            <p style="font-size: 20px;">{{ context.designation }}</p>
+        </div>
+    </div>
+
+    <hr>
+    <h2>PROFESSIONAL SUMMARY</h2>
+<ul>
+    {% for point in context.professional_summary %}
+    <li>{{ point }}</li>
+    {% endfor %}
+</ul>
+    
+    <h2>Technical Skills</h2>
+    <ul>
+        {% for skill in context.technical_skills %}
+        <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Work History</h2>
+<table style="width: 60%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid #000; padding: 8px; text-align: center;">Company</th>
+            <th style="border: 1px solid #000; padding: 8px; text-align: center;">Duration</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in context.work_history %}
+        <tr>
+            <td style="border: 1px solid #000; padding: 8px; text-align: center;">{{ entry.company }}</td>
+            <td style="border: 1px solid #000; padding: 8px; text-align: center;">{{ entry.duration }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{% for entry in context.work_history %}
+    <div>
+        <p><strong>Client:</strong>{{ entry.client }}<span class="duration">{{ entry.duration }}</span></p>
+        <p><strong>Role:</strong> {{ entry.role }}</p>
+        <h3>Responsibilities:</h3>
+        <ul>
+            {% for responsibility in entry.responsibilities.split('\n') %}
+            <li>{{ responsibility }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+    
+<h2>Education</h2>
+<ul>
+    <li>{{ context.education }}</li> <!-- Display education as a bullet point -->
+</ul>
+</body>
+</html>

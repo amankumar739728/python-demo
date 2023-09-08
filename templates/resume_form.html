@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Resume Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            background-color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+
+
+            .header-section {
+                font-size: 24px;
+                color: #333;
+            }
+            
+            .header-label {
+                font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create Resume</h1>
+    <form id="resumeForm" method="post" action="/create_resume/" enctype="multipart/form-data">
+        <!-- Add a section for the header information -->
+        <div id="header_section" class="header-section">
+            <h2>Header Information</h2>
+            <label style="font-size: 20px;" for="company_logo" class="header-label"><strong>Company Logo:</strong></label>
+            <input type="file" id="company_logo" name="company_logo" accept="image/*">
+            <br>
+            <br>
+            <label style="font-size: 20px;" for="full_name" class="header-label"><strong>Name:</strong></label>
+            <input type="text" id="full_name" name="full_name" placeholder="Enter full name" required>
+            <br>
+            <br>
+            <label style="font-size: 20px;" for="designation" class="header-label"><strong>Designation:</strong></label>
+            <input type="text" id="designation" name="designation" placeholder="Enter designation" required>
+        </div>
+
+        <h2>PROFESSIONAL SUMMARY</h2>
+        <textarea id="professional_summary" name="professional_summary" rows="5" cols="50"></textarea>
+        
+        <h2>Technical Skills</h2>
+        <textarea id="technical_skills" name="technical_skills" rows="5" cols="50"></textarea>
+
+        <h2>Education</h2>
+        <textarea id="education" name="education" rows="5" cols="50"></textarea>
+        
+        <h2>Work History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Duration</th>
+                    <th>Role</th>
+                    <th>Responsibilities</th>
+                </tr>
+            </thead>
+            <tbody id="work_history">
+                <tr>
+                    <td><input type="text" name="company[]" placeholder="Company Name"></td>
+                    <td><input type="text" name="duration[]" placeholder="Duration"></td>
+                    <td><input type="text" name="role[]" placeholder="Role"></td>
+                    <td>
+                        <textarea name="responsibilities[]" rows="4" cols="40" placeholder="Responsibilities"></textarea>
+                    </td>
+                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="addWorkHistory()">Add Row</button>
+
+        <!-- Add details for each work experience -->
+        <div id="work_details" style="display: none;">
+            <h2>Client: <span id="client_name"></span></h2>
+            <p>Duration: <span id="client_duration"></span></p>
+            <p>Role: <span id="client_role"></span></p>
+            <h3>Responsibilities:</h3>
+            <textarea id="client_responsibilities" name="client_responsibilities" rows="5" cols="50" placeholder="Responsibilities"></textarea>
+        </div>
+        
+        <input type="hidden" id="workDetailsJson" name="work_history" value="[]">
+        <button type="button" onclick="submitForm()">Submit</button>
+    <!-- Add a separator -->
+    <hr>
+       
+    </form>
+
+
+    <script>
+        function addWorkHistory() {
+            var newRow = '<tr>' +
+                            '<td><input type="text" name="company[]" placeholder="Company Name"></td>' +
+                            '<td><input type="text" name="duration[]" placeholder="Duration"></td>' +
+                            '<td><input type="text" name="role[]" placeholder="Role"></td>' +
+                            '<td><textarea name="responsibilities[]" rows="4" cols="40" placeholder="Responsibilities"></textarea></td>' +
+                            '<td><button type="button" onclick="removeRow(this)">Remove</button></td>' +
+                         '</tr>';
+            document.getElementById('work_history').insertAdjacentHTML('beforeend', newRow);
+        }
+    
+        function removeRow(button) {
+            var row = button.parentNode.parentNode; // Get the parent row of the button
+            row.parentNode.removeChild(row); // Remove the row from the table
+        }
+    
+        function submitForm() {
+            var companyInputs = document.querySelectorAll('input[name="company[]"]');
+            var durationInputs = document.querySelectorAll('input[name="duration[]"]');
+            var roleInputs = document.querySelectorAll('input[name="role[]"]');
+            var responsibilitiesTextareas = document.querySelectorAll('textarea[name="responsibilities[]"]');
+            var workDetails = [];
+    
+            for (var i = 0; i < companyInputs.length; i++) {
+                var company = companyInputs[i].value;
+                var duration = durationInputs[i].value;
+                var role = roleInputs[i].value;
+                var responsibilities = responsibilitiesTextareas[i].value;
+    
+                if (company && duration && role && responsibilities) {
+                    workDetails.push({
+                        company: company,
+                        duration: duration,
+                        role: role,
+                        responsibilities: responsibilities
+                    });
+                }
+            }
+    
+            // Set the JSON data in the hidden field
+            document.getElementById('workDetailsJson').value = JSON.stringify(workDetails);
+    
+            // Submit the form programmatically
+            document.getElementById('resumeForm').submit();
+        }
+    </script>
+    
+</body>
+</html>

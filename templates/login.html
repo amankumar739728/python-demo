@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #336699;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            width: 400px; /* Previous width */
+            height: auto; /* Previous height */
+            padding: 20px;
+            background-color: #339966;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            border: 1px solid aquamarine; /* Add white border */
+        }
+
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+           width: calc(100% - 20px); /* Adjust the width to account for the padding and margin */
+           padding: 8px;
+           margin-right: 10px; /* Add margin to the right */
+           font-size: 16px;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+           box-sizing: border-box; /* Include padding and border in the width calculation */
+        }
+
+
+        .form-group input[type="checkbox"] {
+            display: inline;
+            margin-right: 5px;
+        }
+
+        .form-group input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+          
+        .forgot-password-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+
+        .notification {
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            transition: opacity 0.5s ease;
+        }
+        
+        .notification.error {
+            background-color: #f44336;
+        }
+        
+        .notification.hidden {
+            opacity: 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <p class="error-message">{{ error }}</p>
+        <p class="success-message">{{ message }}</p>
+        
+        <!-- Include the JavaScript code directly here -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const notification = document.querySelector(".notification");
+                const usernameInput = document.getElementById("username");
+
+                usernameInput.addEventListener("focus", function() {
+                    notification.classList.add("hidden");
+                });
+
+                // Check if the notification element exists and contains text
+                if (notification && notification.textContent.trim() !== "") {
+                    notification.classList.remove("hidden");
+
+                    // Remove the notification after 3 seconds (3000 milliseconds)
+                    setTimeout(function() {
+                        notification.classList.add("hidden");
+                    }, 3000);
+                }
+            });
+        </script>
+        
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <div>
+                    {% if notification %}
+                    <p class="notification">{{ notification }}</p>
+                    {% endif %}
+                </div>
+                
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+             
+            <div class="form-group">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Remember Me</label>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/registration-form.html">Sign Up</a></p>
+        </div>
+        
+        <div class="forgot-password-link">
+            <p><a href="/forgot_password">Forgot Password?</a></p>
+        </div>
+
+    </div>
+</body>
+</html>
