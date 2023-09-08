@@ -9,7 +9,11 @@
     "routes":[
         {
             "source":"/(.*)",
+<<<<<<< HEAD
             "destination":"app/api.py"
+=======
+            "destination":"/"
+>>>>>>> 127dfddf2040277dfe67a6d25d4cb1c530d498b5
         }
     ]
 }
